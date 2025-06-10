@@ -10,13 +10,21 @@
         <h1>Dashboard Aplikasi Proyek</h1>
     </div>
     <div class="header-right">
-        {{-- Kita bisa tampilkan nama user yang login nanti --}}
         <span class="user-name">Halo, {{ Auth::user()->name ?? 'Pengguna' }}</span>
         <a href="#" class="notification-icon" id="showNotifications">
             <i class="fas fa-bell"></i>
             <span class="badge">3</span>
         </a>
         <a href="{{ route('projects.create') }}" class="btn add-project-btn">Tambah Proyek +</a>
+
+        {{-- ================================================================ --}}
+        {{-- TOMBOL LOGOUT --}}
+        {{-- ================================================================ --}}
+        <a href="#" class="btn delete-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Logout
+        </a>
+        {{-- ================================================================ --}}
+
     </div>
 </header>
 @endsection
@@ -107,3 +115,11 @@
     </section>
 </div>
 @endsection
+
+{{-- ================================================================ --}}
+{{-- FORM LOGOUT TERSEMBUNYI --}}
+{{-- ================================================================ --}}
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+{{-- ================================================================ --}}
