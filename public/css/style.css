@@ -1,0 +1,496 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Login/Register Page Styling */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    text-align: center;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.login-container .logo img {
+    max-width: 180px;
+    margin-bottom: 30px;
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"],
+.input-group textarea,
+.input-group select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.primary-btn {
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+}
+
+.primary-btn:hover {
+    background-color: #0056b3;
+}
+
+.link-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.link-text a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link-text a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Header Styling */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3f51b5; /* Warna biru gelap */
+    color: white;
+    padding: 15px 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.main-header .header-left {
+    display: flex;
+    align-items: center;
+}
+
+.main-header .header-logo {
+    height: 30px;
+    margin-right: 15px;
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.main-header .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.main-header .user-name {
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.main-header .notification-icon {
+    color: white;
+    font-size: 20px;
+    margin-right: 20px;
+    position: relative;
+    text-decoration: none;
+}
+
+.main-header .notification-icon .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff5722; /* Warna notifikasi */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    min-width: 15px;
+    text-align: center;
+}
+
+.add-project-btn {
+    background-color: #4CAF50; /* Hijau */
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.add-project-btn:hover {
+    background-color: #45a049;
+}
+
+/* Dashboard Content Styling */
+.dashboard-content {
+    padding-top: 30px;
+}
+
+.project-summary {
+    margin-bottom: 30px;
+}
+
+.project-summary h2, .project-list h2 {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.project-summary hr, .project-list hr {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+
+.summary-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    background-color: #e3f2fd; /* Warna biru muda */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card h3 {
+    margin-top: 0;
+    color: #3f51b5;
+    font-size: 18px;
+}
+
+.summary-card .count {
+    font-size: 40px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.project-list {
+    margin-bottom: 40px;
+}
+
+.project-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.project-list th,
+.project-list td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.project-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+}
+
+.project-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.project-list tr:hover {
+    background-color: #eef;
+}
+
+.priority {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.priority.high {
+    background-color: #ffcdd2;
+    color: #d32f2f;
+}
+
+.priority.medium {
+    background-color: #ffe0b2;
+    color: #f57c00;
+}
+
+.priority.low {
+    background-color: #c8e6c9;
+    color: #388e3c;
+}
+
+.status-progress {
+    background-color: #bbdefb;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Project Form/Detail Styling */
+.project-form-container {
+    padding: 30px;
+}
+
+.project-form-container h2 {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.project-form-container .form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.project-form-container .form-row .input-group {
+    flex: 1;
+    margin-bottom: 0; /* Override default input-group margin */
+}
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.form-actions .btn {
+    padding: 12px 25px;
+}
+
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.attached-files {
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 40px;
+    background-color: #fcfcfc;
+}
+
+.file-item {
+    display: inline-block;
+    background-color: #e0f2f7;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #007bff;
+}
+
+.file-item .remove-file-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+/* Comment Section */
+.comment-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.comments-list {
+    margin-bottom: 20px;
+}
+
+.comment-item {
+    background-color: #f8f8f8;
+    border-left: 3px solid #007bff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.comment-item .comment-author {
+    font-weight: bold;
+    color: #3f51b5;
+}
+
+.comment-item .comment-date {
+    font-size: 12px;
+    color: #777;
+}
+
+.comment-item p {
+    margin: 5px 0 0 0;
+    line-height: 1.5;
+}
+
+.new-comment textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.new-comment .btn {
+    float: right;
+}
+
+/* Back Link */
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 20px;
+}
+
+.back-link i {
+    margin-right: 5px;
+}
+
+/* Notifications Page Styling */
+.notifications-container {
+    padding-top: 30px;
+}
+
+.notification-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.notification-actions .btn {
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.secondary-btn {
+    background-color: #607d8b; /* Warna abu-abu kebiruan */
+    color: white;
+}
+.secondary-btn:hover {
+    background-color: #455a64;
+}
+
+.notifications-list {
+    margin-top: 20px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    background-color: #fdfdfd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notification-item.unread {
+    background-color: #e3f2fd; /* Warna untuk notifikasi belum dibaca */
+    font-weight: bold;
+    border-left: 5px solid #007bff;
+}
+
+.notification-item.unread:hover {
+    background-color: #cfe8fc;
+}
+
+.notification-item:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.notification-item .notification-checkbox {
+    margin-right: 15px;
+    transform: scale(1.2);
+}
+
+.notification-item .notification-text {
+    flex-grow: 1;
+    cursor: pointer; /* Menandakan bisa diklik untuk detail */
+}
+
+.notification-item .project-name {
+    color: #007bff;
+}
+
+.notification-item .mark-read-icon {
+    color: #666;
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.2s ease;
+}
+
+.notification-item .mark-read-icon:hover {
+    color: #007bff;
+}
