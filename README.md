@@ -1,61 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Trackle - Aplikasi Manajemen Proyek Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Trackle adalah aplikasi manajemen proyek berbasis web yang dibangun menggunakan Laravel. Aplikasi ini mendukung fitur login/register, manajemen proyek, komentar, notifikasi, dan pengelolaan user berbasis role sederhana.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Autentikasi**: Login & register user.
+- **Manajemen Proyek**: Tambah, edit, hapus, dan lihat detail proyek.
+- **Komentar**: Tambah komentar pada proyek.
+- **Notifikasi**: Notifikasi sederhana untuk user terkait proyek.
+- **Dashboard**: Ringkasan proyek mendatang, berjalan, dan selesai.
+- **Manajemen User**: Setiap proyek memiliki PIC (Person In Charge).
+- **Dukungan AJAX**: Form proyek dan komentar menggunakan AJAX (fetch API).
+- **Dukungan Cloudflare Tunnel**: Bisa diakses dari internet menggunakan Cloudflare Tunnel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalasi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Clone repository**
+   ```
+   git clone <repo-url>
+   cd trackle-laravel
+   ```
 
-## Learning Laravel
+2. **Install dependency**
+   ```
+   composer install
+   npm install && npm run build
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Copy file environment**
+   ```
+   cp .env.example .env
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **Atur konfigurasi database di `.env`**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=trackle-server
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. **Generate key**
+   ```
+   php artisan key:generate
+   ```
 
-## Laravel Sponsors
+6. **Migrasi database**
+   ```
+   php artisan migrate
+   php artisan db:seed
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. **(Opsional) Buat symlink storage**
+   ```
+   php artisan storage:link
+   ```
 
-### Premium Partners
+8. **Jalankan server**
+   ```
+   php artisan serve
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+9. **(Opsional) Jalankan Cloudflare Tunnel**
+   ```
+   cloudflared tunnel --url http://localhost:8000
+   ```
+   Pastikan `APP_URL` di `.env` sesuai dengan domain tunnel jika menggunakan Cloudflare.
 
-## Contributing
+## Struktur Folder Penting
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- `app/Http/Controllers` - Controller web & API
+- `app/Models` - Model Eloquent
+- `resources/views` - Blade template (login, dashboard, proyek, dsb)
+- `public/js/script.js` - Script utama frontend (AJAX)
+- `routes/web.php` & `routes/api.php` - Routing aplikasi
 
-## Code of Conduct
+## Catatan Penggunaan
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Jika menggunakan Cloudflare Tunnel, pastikan:
+  - `APP_URL` di `.env` sesuai domain tunnel.
+  - `SESSION_DOMAIN` dikosongkan.
+  - Jalankan `php artisan config:clear` setelah mengubah `.env`.
+- Untuk development, gunakan `SESSION_DRIVER=file` jika ada masalah session di tunnel.
 
-## Security Vulnerabilities
+## Kontribusi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Pull request dan issue sangat diterima! Silakan fork dan buat PR untuk fitur/bugfix.
 
-## License
+## Lisensi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License.
