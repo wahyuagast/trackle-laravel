@@ -7,7 +7,7 @@
 <header class="main-header">
     <div class="header-left">
         <img src="https://via.placeholder.com/100x30?text=LOGO" alt="Logo Instansi" class="header-logo">
-        <h1>Dashboard Aplikasi Proyek</h1>
+        <h1>Trackle Dashboard</h1>
     </div>
     <div class="header-right">
         <span class="user-name">Halo, {{ Auth::user()->name ?? 'Pengguna' }}</span>
@@ -15,16 +15,10 @@
             <i class="fas fa-bell"></i>
             <span class="badge">3</span>
         </a>
-        <a href="{{ route('projects.create') }}" class="btn add-project-btn">Tambah Proyek +</a>
-
-        {{-- ================================================================ --}}
-        {{-- TOMBOL LOGOUT --}}
-        {{-- ================================================================ --}}
+        <a href="{{ route('projects.create') }}" class="btn add-project-btn">Tambah Proyek</a>
         <a href="#" class="btn delete-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             Logout
         </a>
-        {{-- ================================================================ --}}
-
     </div>
 </header>
 @endsection
@@ -37,7 +31,6 @@
         <div class="summary-cards">
             <div class="summary-card">
                 <h3>Proyek Mendatang</h3>
-                {{-- Data ini akan kita isi dari controller --}}
                 <p class="count">{{ $upcoming_count }}</p>
             </div>
             <div class="summary-card">
@@ -65,7 +58,6 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- Loop melalui data proyek dari controller --}}
                 @forelse($upcoming_projects as $project)
                 <tr>
                     <td>{{ $project->name }}</td>
@@ -101,7 +93,7 @@
                 <tr>
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
-                    <td><span class="status-progress">{{-- Di sini bisa ditambahkan progress bar --}}70% Selesai</span></td>
+                    <td><span class="status-progress">70% Selesai</span></td>
                     <td>{{ $project->pic->name ?? 'Tidak ada PIC' }}</td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
@@ -116,10 +108,6 @@
 </div>
 @endsection
 
-{{-- ================================================================ --}}
-{{-- FORM LOGOUT TERSEMBUNYI --}}
-{{-- ================================================================ --}}
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
-{{-- ================================================================ --}}
