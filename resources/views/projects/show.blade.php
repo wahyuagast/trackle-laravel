@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td style="font-weight: bold; border: 1px solid #ddd;">Person In Charge (PIC)</td>
-                    <td style="border: 1px solid #ddd;">{{ optional($project->pic)->name }}</td>
+                    <td style="border: 1px solid #ddd;">{{ $project->pics->pluck('name')->join(', ') }}</td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold; border: 1px solid #ddd;">Prioritas</td>

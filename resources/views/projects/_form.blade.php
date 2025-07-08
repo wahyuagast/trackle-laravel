@@ -1,15 +1,11 @@
-{{-- resources/views/projects/_form.blade.php --}}
-
 @csrf {{-- CSRF Token --}}
 
-{{-- Jika ini form edit, kita perlu method PUT --}}
 @if(isset($project))
     @method('PUT')
 @endif
 
 <div class="input-group">
     <label for="name">Nama Proyek:</label>
-    {{-- old() untuk menjaga input jika validasi gagal, ?? '' untuk form create --}}
     <input type="text" id="name" name="name" value="{{ old('name', $project->name ?? '') }}" required>
 </div>
 <div class="input-group">
@@ -28,15 +24,24 @@
 </div>
 <div class="form-row">
     <div class="input-group">
-        <label for="pic_user_id">PIC:</label>
-        <select id="pic_user_id" name="pic_user_id" required>
-            <option value="">Pilih Karyawan</option>
-            @foreach($users as $user)
-                <option value="{{ $user->id }}" {{ (old('pic_user_id', $project->pic_user_id ?? '') == $user->id) ? 'selected' : '' }}>
-                    {{ $user->name }}
-                </option>
-            @endforeach
-        </select>
+        <label>PIC (bisa pilih lebih dari satu):</label>
+        @php
+            $selectedPics = old('pic_user_id', isset($project) ? $project->pics->pluck('id')->toArray() : []);
+        @endphp
+        @if(isset($users) && count($users))
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                @foreach($users as $user)
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" name="pic_user_id[]" value="{{ $user->id }}"
+                            {{ in_array($user->id, $selectedPics) ? 'checked' : '' }}>
+                        <span style="margin-left: 5px;">{{ $user->name }}</span>
+                    </label>
+                @endforeach
+            </div>
+            <small>Pilih satu atau lebih PIC.</small>
+        @else
+            <span style="color:red;">Tidak ada user yang bisa dipilih sebagai PIC.</span>
+        @endif
     </div>
     <div class="input-group">
         <label for="priority">Prioritas:</label>
@@ -55,8 +60,6 @@
         @endforeach
     </select>
 </div>
-
-{{-- Untuk attachment dan komentar akan ditangani terpisah di halaman detail --}}
 
 <div class="form-actions">
     <button type="submit" class="btn primary-btn" id="saveButton">Simpan Proyek</button>

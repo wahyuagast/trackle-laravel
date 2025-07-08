@@ -10,24 +10,25 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Ambil data dari database dan proses
-        $upcoming_projects = Project::with('pic')
+        $upcoming_projects = Project::with('pics')
             ->where('deadline_date', '>=', Carbon::now())
             ->where('deadline_date', '<=', Carbon::now()->addDays(30))
             ->where('status', '!=', 'Selesai')
             ->get();
 
-        $ongoing_projects = Project::with('pic')
+        $ongoing_projects = Project::with('pics')
             ->where('status', 'Sedang Berjalan')
             ->get();
 
-        // Kirim data ke view
+        $completed_projects = Project::with('pics')->where('status', 'Selesai')->get();
+
         return view('dashboard', [
             'upcoming_projects' => $upcoming_projects,
             'ongoing_projects' => $ongoing_projects,
             'upcoming_count' => Project::where('status', 'Belum Dimulai')->count(),
             'ongoing_count' => $ongoing_projects->count(),
             'completed_count' => Project::where('status', 'Selesai')->count(),
+            'completed_projects' => $completed_projects,
         ]);
     }
 }

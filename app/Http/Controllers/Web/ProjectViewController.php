@@ -11,19 +11,19 @@ class ProjectViewController extends Controller
 {
     public function create()
     {
-        $users = User::orderBy('name')->get();
+        $users = \App\Models\User::orderBy('name')->get();
         return view('projects.create', compact('users'));
     }
 
     public function show(Project $project)
     {
-        $project->load('pic', 'comments.user'); // Eager load relasi
+        $project->load('pics', 'comments.user');
         return view('projects.show', compact('project'));
     }
 
     public function edit(Project $project)
     {
-        $users = User::orderBy('name')->get();
+        $users = \App\Models\User::orderBy('name')->get();
         return view('projects.edit', compact('project', 'users'));
     }
 }

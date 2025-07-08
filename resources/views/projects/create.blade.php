@@ -11,7 +11,6 @@
 <div class="project-form-container">
     <h1>Tambah Proyek Baru</h1>
     <hr>
-    {{-- Kita gunakan JavaScript untuk submit form ini ke API --}}
     <form id="projectForm" action="{{ route('api.projects.store') }}" method="POST">
         @include('projects._form')
     </form>

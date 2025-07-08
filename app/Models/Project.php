@@ -14,15 +14,14 @@ class Project extends Model
         'description',
         'start_date',
         'deadline_date',
-        'pic_user_id',
         'priority',
         'status',
     ];
 
-    // Relasi: Sebuah Project dimiliki oleh satu User (PIC)
-    public function pic()
+    // Relasi: Sebuah Project dapat dimiliki oleh banyak User (PIC)
+    public function pics()
     {
-        return $this->belongsTo(User::class, 'pic_user_id');
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
     }
 
     // Relasi: Sebuah Project memiliki banyak Comment

@@ -50,25 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectForm = document.getElementById('projectForm');
     if (projectForm) {
         projectForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Mencegah form melakukan submit biasa
+            e.preventDefault();
 
             const formData = new FormData(projectForm);
-            const data = Object.fromEntries(formData.entries());
-            const url = projectForm.action;
-            let method = 'POST';
+            // Ambil semua nilai checkbox pic_user_id[]
+            const picUserIds = [];
+            projectForm.querySelectorAll('input[name="pic_user_id[]"]:checked').forEach(cb => {
+                picUserIds.push(cb.value);
+            });
 
-            // Laravel menggunakan input tersembunyi `_method` untuk request PUT/PATCH
+            // Ambil data lain
+            const data = {
+                name: formData.get('name'),
+                description: formData.get('description'),
+                start_date: formData.get('start_date'),
+                deadline_date: formData.get('deadline_date'),
+                priority: formData.get('priority'),
+                status: formData.get('status'),
+                pic_user_id: picUserIds
+            };
+
+            // Jika ada _method (PUT/PATCH)
+            let method = 'POST';
             if (formData.get('_method')) {
                 method = formData.get('_method');
             }
 
-            // Tampilkan loading/disable tombol
             const submitButton = projectForm.querySelector('button[type="submit"]');
             submitButton.disabled = true;
             submitButton.textContent = 'Menyimpan...';
 
             try {
-                const response = await fetch(url, {
+                const response = await fetch(projectForm.action, {
                     method: method,
                     headers: apiHeaders,
                     body: JSON.stringify(data)
@@ -77,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (!response.ok) {
-                    // Jika ada error validasi dari Laravel (status 422)
                     if (response.status === 422) {
                         const errors = Object.values(result.errors).map(err => err.join(', ')).join('\n');
                         alert(`Gagal menyimpan. Harap periksa input Anda:\n\n${errors}`);
@@ -85,14 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         throw new Error(result.message || 'Terjadi kesalahan pada server.');
                     }
                 } else {
-                    alert(result.message); // Tampilkan pesan sukses dari API
-                    window.location.href = '/'; // Arahkan kembali ke dashboard
+                    alert(result.message);
+                    window.location.href = '/';
                 }
             } catch (error) {
                 console.error('Error submitting project form:', error);
                 alert('Terjadi kesalahan: ' + error.message);
             } finally {
-                // Aktifkan kembali tombol
                 submitButton.disabled = false;
                 submitButton.textContent = 'Simpan Proyek';
             }

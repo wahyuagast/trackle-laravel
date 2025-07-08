@@ -11,19 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-    /**
-     * Menampilkan semua data proyek.
-     */
     public function index()
     {
-        // Ambil semua project beserta relasi PIC-nya
-        $projects = Project::with('pic')->latest()->get();
+        $projects = Project::with('pics')->latest()->get();
         return response()->json($projects);
     }
 
-    /**
-     * Menyimpan proyek baru.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -31,7 +24,8 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'start_date' => 'required|date',
             'deadline_date' => 'required|date|after_or_equal:start_date',
-            'pic_user_id' => 'required|exists:users,id',
+            'pic_user_id' => 'required|array',
+            'pic_user_id.*' => 'exists:users,id',
             'priority' => 'required|in:Tinggi,Sedang,Rendah',
             'status' => 'required|in:Belum Dimulai,Sedang Berjalan,Selesai,Ditunda,Dibatalkan',
         ]);
@@ -40,28 +34,22 @@ class ProjectController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $project = Project::create($request->all());
+        $data = $request->except('pic_user_id');
+        $project = Project::create($data);
+        $project->pics()->sync($request->pic_user_id);
 
         return response()->json([
             'message' => 'Proyek berhasil dibuat!',
-            'data' => $project
+            'data' => $project->load('pics')
         ], 201);
     }
 
-    /**
-     * Menampilkan detail satu proyek.
-     */
     public function show(Project $project)
     {
-        // Load relasi yang dibutuhkan (PIC, comments, attachments)
-        $project->load('pic', 'comments.user', 'attachments');
+        $project->load('pics', 'comments.user', 'attachments');
         return response()->json($project);
     }
 
-
-    /**
-     * Memperbarui data proyek.
-     */
     public function update(Request $request, Project $project)
     {
         $validator = Validator::make($request->all(), [
@@ -69,7 +57,8 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'start_date' => 'required|date',
             'deadline_date' => 'required|date|after_or_equal:start_date',
-            'pic_user_id' => 'required|exists:users,id',
+            'pic_user_id' => 'required|array',
+            'pic_user_id.*' => 'exists:users,id',
             'priority' => 'required|in:Tinggi,Sedang,Rendah',
             'status' => 'required|in:Belum Dimulai,Sedang Berjalan,Selesai,Ditunda,Dibatalkan',
         ]);
@@ -78,17 +67,16 @@ class ProjectController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $project->update($request->all());
+        $data = $request->except('pic_user_id');
+        $project->update($data);
+        $project->pics()->sync($request->pic_user_id);
 
         return response()->json([
             'message' => 'Proyek berhasil diperbarui!',
-            'data' => $project
+            'data' => $project->load('pics')
         ]);
     }
 
-    /**
-     * Menghapus proyek.
-     */
     public function destroy(Project $project)
     {
         $project->delete();
@@ -97,9 +85,6 @@ class ProjectController extends Controller
         ], 200);
     }
 
-    /**
-     * Menyimpan komentar baru untuk sebuah proyek.
-     */
     public function storeComment(Request $request, Project $project)
     {
         $validator = Validator::make($request->all(), [
@@ -112,10 +97,9 @@ class ProjectController extends Controller
 
         $comment = $project->comments()->create([
             'body' => $request->body,
-            'user_id' => Auth::id(), // Mengambil ID user yang sedang login
+            'user_id' => Auth::id(),
         ]);
 
-        // Load relasi user agar bisa menampilkan nama di frontend
         $comment->load('user');
 
         return response()->json([

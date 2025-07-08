@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('start_date');
             $table->date('deadline_date');
-            $table->foreignId('pic_user_id')->constrained('users')->onDelete('cascade');
             $table->enum('priority', ['Tinggi', 'Sedang', 'Rendah'])->default('Sedang');
             $table->enum('status', ['Belum Dimulai', 'Sedang Berjalan', 'Selesai', 'Ditunda', 'Dibatalkan'])->default('Belum Dimulai');
             $table->timestamps(); // otomatis membuat kolom created_at dan updated_at

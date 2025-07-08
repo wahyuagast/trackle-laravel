@@ -63,7 +63,7 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
                     <td><span class="priority {{ strtolower($project->priority) }}">{{ $project->priority }}</span></td>
-                    <td>{{ $project->pic->name ?? 'Tidak ada PIC' }}</td> {{-- Mengambil nama dari relasi 'pic' --}}
+                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
                 @empty
@@ -94,12 +94,41 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
                     <td><span class="status-progress">70% Selesai</span></td>
-                    <td>{{ $project->pic->name ?? 'Tidak ada PIC' }}</td>
+                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
                  @empty
                 <tr>
                     <td colspan="5" style="text-align: center;">Tidak ada proyek yang sedang berjalan.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </section>
+
+    <section class="project-list">
+        <h2>PROYEK TELAH SELESAI</h2>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Proyek</th>
+                    <th>Deadline</th>
+                    <th>PIC</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($completed_projects as $project)
+                <tr>
+                    <td>{{ $project->name }}</td>
+                    <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
+                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
+                    <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" style="text-align: center;">Tidak ada proyek yang telah selesai.</td>
                 </tr>
                 @endforelse
             </tbody>
