@@ -20,7 +20,7 @@ class RegisterController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('login')->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput()->with('showRegister', true);
         }
 
         $user = User::create([

@@ -2,18 +2,21 @@
 
 @section('title', 'Dashboard - Trackle')
 
-{{-- Header yang spesifik untuk halaman ini --}}
 @section('header')
 <header class="main-header">
     <div class="header-left">
-        <img src="{{ asset('images/trackle_logo.png') }}" alt="Logo Trackle" class="header-logo">
         <h1>Trackle Dashboard</h1>
     </div>
     <div class="header-right">
         <span class="user-name">Halo, {{ Auth::user()->name ?? 'Pengguna' }}</span>
-        <a href="#" class="notification-icon" id="showNotifications">
+        @php
+            $notifCount = \App\Models\Notification::where('user_id', Auth::id())->where('is_read', false)->count();
+        @endphp
+        <a href="{{ route('notifications.index') }}" class="notification-icon" id="showNotifications">
             <i class="fas fa-bell"></i>
-            <span class="badge">3</span>
+            @if($notifCount > 0)
+                <span class="badge">{{ $notifCount }}</span>
+            @endif
         </a>
         <a href="{{ route('projects.create') }}" class="btn add-project-btn">Tambah Proyek</a>
         <a href="#" class="btn delete-btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -85,7 +88,11 @@
                             <span>Tidak ada PIC</span>
                         @endforelse
                     </td>
-                    <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
+                    <td>
+                        <a href="{{ route('projects.show', $project->id) }}" class="action-btn" title="Detail">
+                            <i class="fas fa-eye"></i> <span class="d-none d-md-inline">Detail</span>
+                        </a>
+                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -125,7 +132,11 @@
                             <span>Tidak ada PIC</span>
                         @endforelse
                     </td>
-                    <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
+                    <td>
+                        <a href="{{ route('projects.show', $project->id) }}" class="action-btn" title="Detail">
+                            <i class="fas fa-eye"></i> <span class="d-none d-md-inline">Detail</span>
+                        </a>
+                    </td>
                 </tr>
                  @empty
                 <tr>
@@ -163,7 +174,11 @@
                             <span>Tidak ada PIC</span>
                         @endforelse
                     </td>
-                    <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
+                    <td>
+                        <a href="{{ route('projects.show', $project->id) }}" class="action-btn" title="Detail">
+                            <i class="fas fa-eye"></i> <span class="d-none d-md-inline">Detail</span>
+                        </a>
+                    </td>
                 </tr>
                 @empty
                 <tr>

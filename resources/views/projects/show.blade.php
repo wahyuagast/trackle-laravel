@@ -1,5 +1,3 @@
-{{-- resources/views/projects/show.blade.php --}}
-
 @extends('layouts.app')
 
 @section('title', 'Detail Proyek: ' . $project->name)
@@ -12,14 +10,13 @@
     </div>
     <div class="header-right">
         <span class="user-name">Halo, {{ Auth::user()->name }}</span>
-        <a href="{{ route('projects.edit', $project->id) }}" class="btn add-project-btn" style="background-color: #f0ad4e;">Edit Proyek</a>
+        <a href="{{ route('projects.edit', $project->id) }}" class="btn add-project-btn">Edit Proyek</a>
     </div>
 </header>
 @endsection
 
 @section('content')
 <div class="project-form-container">
-    {{-- Bagian Detail Proyek --}}
     <section class="project-details">
         <h2>{{ $project->name }}</h2>
         <p style="color: #555; margin-top: -10px; margin-bottom: 20px;">{{ $project->description }}</p>
@@ -50,7 +47,6 @@
         </table>
     </section>
 
-    {{-- Bagian Komentar --}}
     <section id="commentSection" class="comment-section" style="margin-top: 40px;">
         <h2>KOMENTAR</h2>
         <hr>
@@ -66,11 +62,10 @@
             @endforelse
         </div>
         <div class="new-comment">
-            {{-- Form untuk menambah komentar baru, ditangani oleh script.js --}}
-            <form id="newCommentForm" action="{{ route('api.projects.comments.store', $project->id) }}" method="POST">
+            <form id="newCommentForm" action="{{ route('api.projects.comments.store', $project->id) }}" method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
                 @csrf
-                <textarea id="newCommentText" name="body" placeholder="Tambah Komentar..." rows="3" required></textarea>
-                <button type="submit" class="btn primary-btn" id="sendCommentButton">Kirim</button>
+                <textarea id="newCommentText" name="body" placeholder="Tambah Komentar..." rows="2" required style="flex:1; resize: vertical; min-height: 38px;"></textarea>
+                <button type="submit" class="btn primary-btn" id="sendCommentButton" style="margin:0;">Kirim</button>
             </form>
         </div>
     </section>

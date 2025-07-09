@@ -198,4 +198,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /**
+     * ===================================================================
+     * LOGIKA NOTIFIKASI
+     * Mengambil jumlah notifikasi yang belum dibaca.
+     * ===================================================================
+     */
+    setInterval(function() {
+        fetch('/notifications/unread-count')
+            .then(res => res.json())
+            .then(data => {
+                const badge = document.querySelector('.notification-icon .badge');
+                if (data.count > 0) {
+                    if (badge) {
+                        badge.textContent = data.count;
+                        badge.style.display = '';
+                    } else {
+                        const newBadge = document.createElement('span');
+                        newBadge.className = 'badge';
+                        newBadge.textContent = data.count;
+                        document.querySelector('.notification-icon').appendChild(newBadge);
+                    }
+                } else if (badge) {
+                    badge.style.display = 'none';
+                }
+            });
+    }, 10000); // cek setiap 10 detik
 });

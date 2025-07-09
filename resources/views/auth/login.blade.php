@@ -1,23 +1,35 @@
-{{-- Menggunakan layout utama yang sudah kita buat --}}
 @extends('layouts.app')
 
-{{-- Mengatur judul halaman --}}
 @section('title', 'Login/Register - Trackle')
 
-{{-- Mengisi 'content' dari layout utama dengan form login --}}
 @section('content')
 <div class="login-container">
     <div class="logo">
-        <img src="https://via.placeholder.com/150x50?text=LOGO+INSTANSI" alt="Logo Instansi">
+        <img src="{{ asset('images/trackle_logo.png') }}" alt="Logo Trackle">
     </div>
     <h2>Selamat Datang!</h2>
 
-    {{-- Nanti, action ini bisa diarahkan ke route Laravel --}}
+    @if ($errors->any())
+        <div class="alert alert-danger" style="margin-bottom:15px;">
+            <ul style="margin:0; padding-left:18px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger" style="margin-bottom:15px;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form id="loginForm" method="POST" action="{{ route('login.post') }}">
-        @csrf {{-- Token Keamanan Laravel --}}
+        @csrf
         <div class="input-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" required>
         </div>
         <div class="input-group">
             <label for="password">Password:</label>
@@ -35,7 +47,7 @@
             <input type="email" id="regEmail" name="email" required>
         </div>
         <div class="input-group">
-            <label for="regName">Nama:</label> {{-- Tambahkan input nama --}}
+            <label for="regName">Nama:</label>
             <input type="text" id="regName" name="name" required>
         </div>
         <div class="input-group">
@@ -50,4 +62,14 @@
         <p class="link-text">Sudah punya akun? <a href="#" id="showLogin">Login</a></p>
     </form>
 </div>
+
+@if(session('showRegister'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+    });
+</script>
+@endif
+
 @endsection

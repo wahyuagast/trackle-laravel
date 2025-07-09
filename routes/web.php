@@ -28,5 +28,13 @@ Route::middleware('auth')->group(function () {
 Route::resource('projects', ProjectViewController::class)->only(['create', 'show', 'edit']);
 });
 
+// Rute untuk Notifikasi
+Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+Route::post('/notifications/read/{notification}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
+Route::get('/notifications/unread-count', function () {
+    $count = \App\Models\Notification::where('user_id', Auth::id())->where('is_read', false)->count();
+    return response()->json(['count' => $count]);
+})->middleware('auth');
+
 // Rute default dari Laravel Breeze/UI untuk autentikasi jika Anda menggunakannya nanti
 // require __DIR__.'/auth.php';

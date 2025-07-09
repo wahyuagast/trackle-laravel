@@ -1,10 +1,8 @@
-{{-- resources/views/projects/create.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Tambah Proyek Baru')
 
 @section('header')
-    {{-- Header bisa dibuat parsial juga jika diinginkan --}}
 @endsection
 
 @section('content')
