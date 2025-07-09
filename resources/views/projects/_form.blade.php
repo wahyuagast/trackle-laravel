@@ -29,16 +29,16 @@
             $selectedPics = old('pic_user_id', isset($project) ? $project->pics->pluck('id')->toArray() : []);
         @endphp
         @if(isset($users) && count($users))
-            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <div class="pic-checkbox-list">
                 @foreach($users as $user)
-                    <label style="display: flex; align-items: center;">
+                    <label class="pic-checkbox-item">
                         <input type="checkbox" name="pic_user_id[]" value="{{ $user->id }}"
                             {{ in_array($user->id, $selectedPics) ? 'checked' : '' }}>
-                        <span style="margin-left: 5px;">{{ $user->name }}</span>
+                        <span>{{ $user->name }}</span>
                     </label>
                 @endforeach
             </div>
-            <small>Pilih satu atau lebih PIC.</small>
+            <small>Pilih satu atau lebih PIC. Gunakan pencarian (Ctrl+F) jika user sangat banyak.</small>
         @else
             <span style="color:red;">Tidak ada user yang bisa dipilih sebagai PIC.</span>
         @endif
@@ -59,6 +59,8 @@
             <option value="{{ $status }}" {{ (old('status', $project->status ?? 'Belum Dimulai') == $status) ? 'selected' : '' }}>{{ $status }}</option>
         @endforeach
     </select>
+    <label for="progress">Progress (%):</label>
+    <input type="number" id="progress" name="progress" min="0" max="100" value="{{ old('progress', $project->progress ?? 0) }}" required>
 </div>
 
 <div class="form-actions">

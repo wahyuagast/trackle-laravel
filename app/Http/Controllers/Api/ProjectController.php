@@ -28,6 +28,7 @@ class ProjectController extends Controller
             'pic_user_id.*' => 'exists:users,id',
             'priority' => 'required|in:Tinggi,Sedang,Rendah',
             'status' => 'required|in:Belum Dimulai,Sedang Berjalan,Selesai,Ditunda,Dibatalkan',
+            'progress' => 'required|integer|min:0|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -61,6 +62,7 @@ class ProjectController extends Controller
             'pic_user_id.*' => 'exists:users,id',
             'priority' => 'required|in:Tinggi,Sedang,Rendah',
             'status' => 'required|in:Belum Dimulai,Sedang Berjalan,Selesai,Ditunda,Dibatalkan',
+            'progress' => 'required|integer|min:0|max:100',
         ]);
 
         if ($validator->fails()) {

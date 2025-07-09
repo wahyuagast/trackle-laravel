@@ -6,7 +6,7 @@
 @section('header')
 <header class="main-header">
     <div class="header-left">
-        <img src="https://via.placeholder.com/100x30?text=LOGO" alt="Logo Instansi" class="header-logo">
+        <img src="{{ asset('images/trackle_logo.png') }}" alt="Logo Trackle" class="header-logo">
         <h1>Trackle Dashboard</h1>
     </div>
     <div class="header-right">
@@ -24,6 +24,18 @@
 @endsection
 
 @section('content')
+@php
+    $bgColors = ['#e3f2fd', '#ffe0b2', '#c8e6c9', '#f8bbd0', '#d1c4e9', '#b2dfdb', '#fff9c4', '#d7ccc8', '#f0f4c3', '#ffe082'];
+    $fontColors = ['#1565c0', '#e65100', '#2e7d32', '#ad1457', '#4527a0', '#00695c', '#b28900', '#4e342e', '#616161', '#ff6f00'];
+    function pillColor($seed, $bgColors, $fontColors) {
+        $idx = crc32($seed) % count($bgColors);
+        return [
+            'bg' => $bgColors[$idx],
+            'font' => $fontColors[$idx]
+        ];
+    }
+@endphp
+
 <div class="dashboard-content">
     <section class="project-summary">
         <h2>RINGKASAN PROYEK</h2>
@@ -63,7 +75,16 @@
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
                     <td><span class="priority {{ strtolower($project->priority) }}">{{ $project->priority }}</span></td>
-                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
+                    <td>
+                        @forelse($project->pics as $pic)
+                            @php $color = pillColor($pic->id, $bgColors, $fontColors); @endphp
+                            <span class="pic-pill" style="background-color: {{ $color['bg'] }}; color: {{ $color['font'] }};">
+                                {{ $pic->name }}
+                            </span>
+                        @empty
+                            <span>Tidak ada PIC</span>
+                        @endforelse
+                    </td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
                 @empty
@@ -93,8 +114,17 @@
                 <tr>
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
-                    <td><span class="status-progress">70% Selesai</span></td>
-                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
+                    <td><span class="status-progress">{{ $project->progress }}% Selesai</span></td>
+                    <td>
+                        @forelse($project->pics as $pic)
+                            @php $color = pillColor($pic->id, $bgColors, $fontColors); @endphp
+                            <span class="pic-pill" style="background-color: {{ $color['bg'] }}; color: {{ $color['font'] }};">
+                                {{ $pic->name }}
+                            </span>
+                        @empty
+                            <span>Tidak ada PIC</span>
+                        @endforelse
+                    </td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
                  @empty
@@ -123,7 +153,16 @@
                 <tr>
                     <td>{{ $project->name }}</td>
                     <td>{{ \Carbon\Carbon::parse($project->deadline_date)->format('d F Y') }}</td>
-                    <td>{{ $project->pics->pluck('name')->join(', ') ?: 'Tidak ada PIC' }}</td>
+                    <td>
+                        @forelse($project->pics as $pic)
+                            @php $color = pillColor($pic->id, $bgColors, $fontColors); @endphp
+                            <span class="pic-pill" style="background-color: {{ $color['bg'] }}; color: {{ $color['font'] }};">
+                                {{ $pic->name }}
+                            </span>
+                        @empty
+                            <span>Tidak ada PIC</span>
+                        @endforelse
+                    </td>
                     <td><a href="{{ route('projects.show', $project->id) }}">Detail</a></td>
                 </tr>
                 @empty

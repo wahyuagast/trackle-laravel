@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 deadline_date: formData.get('deadline_date'),
                 priority: formData.get('priority'),
                 status: formData.get('status'),
+                progress: formData.get('progress'),
                 pic_user_id: picUserIds
             };
 

@@ -16,6 +16,7 @@ class Project extends Model
         'deadline_date',
         'priority',
         'status',
+        'progress',
     ];
 
     // Relasi: Sebuah Project dapat dimiliki oleh banyak User (PIC)
